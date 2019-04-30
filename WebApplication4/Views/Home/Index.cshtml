@@ -1,0 +1,111 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<html>
+<head>
+    <link rel="stylesheet" href="~/css/style.css" />
+    <style>
+
+        .jk-slider {
+            width: auto;
+            height: auto;
+        }
+        /*          Hero Headers        */
+        /********************************/
+        .hero {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            z-index: 3;
+            color: #fff;
+            text-align: center;
+            text-transform: uppercase;
+            text-shadow: 1px 1px 0 rgba(0,0,0,.75);
+            -webkit-transform: translate3d(-50%,-50%,0);
+            -moz-transform: translate3d(-50%,-50%,0);
+            -ms-transform: translate3d(-50%,-50%,0);
+            -o-transform: translate3d(-50%,-50%,0);
+            transform: translate3d(-50%,-50%,0);
+        }
+
+            .hero h1 {
+                font-size: 6em;
+                font-weight: bold;
+                margin: 0;
+                padding: 0;
+            }
+
+        .fade-carousel .carousel-inner .item .hero {
+            opacity: 0;
+            -webkit-transition: 2s all ease-in-out .1s;
+            -moz-transition: 2s all ease-in-out .1s;
+            -ms-transition: 2s all ease-in-out .1s;
+            -o-transition: 2s all ease-in-out .1s;
+            transition: 2s all ease-in-out .1s;
+        }
+
+        .fade-carousel .carousel-inner .item.active .hero {
+            opacity: 1;
+            -webkit-transition: 2s all ease-in-out .1s;
+            -moz-transition: 2s all ease-in-out .1s;
+            -ms-transition: 2s all ease-in-out .1s;
+            -o-transition: 2s all ease-in-out .1s;
+            transition: 2s all ease-in-out .1s;
+        }
+
+        .navbar {
+            margin-bottom: 0px;
+        }
+    </style>
+</head>
+<body style="background-color:black">
+
+    <section class="jk-slider">
+        <div id="carousel-example" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+                <li data-target="#carousel-example" data-slide-to="0" class="active"></li>
+                <li data-target="#carousel-example" data-slide-to="1"></li>
+                <li data-target="#carousel-example" data-slide-to="2"></li>
+            </ol>
+            <div class="carousel-inner">
+                <div class="item active">
+                    <a href="#"><img src="https://images.wallpaperscraft.ru/image/fon_temnyy_pelena_87441_1280x720.jpg" /></a>
+                    <div class="hero">
+                        <hgroup>
+                            <h1>MiniBoss</h1>
+                            <p>Привет студент! Скоро сессия, а ты совсем не готов?!? Тогда ты попал по адресу!</p>
+                        </hgroup>
+                    </div>
+                </div>
+                <div class="item">
+                    <a href="#"><img src="https://images.wallpaperscraft.ru/image/fon_temnyy_pelena_87441_1280x720.jpg" /></a>
+                    <div class="hero">
+                        <hgroup>
+                            <h1>MiniBoss</h1>
+                            <p>Наша система позволит найти тебе ответы на экзаменационные вопросы. Что для этого нужно? Просто заполни необходимые поля и ответы у тебя в кармане. </p>
+                        </hgroup>
+                    </div>
+                </div>
+                <div class="item">
+                    <a href="#"><img src="https://images.wallpaperscraft.ru/image/fon_temnyy_pelena_87441_1280x720.jpg" /></a>
+                    <div class="hero">
+                        <hgroup>
+                            <h1>MiniBoss</h1>
+                            <p>Чтобы ответы были всегда под рукой, у нас есть мобильное приложение!</p>
+                        </hgroup>
+                    </div>
+                </div>
+            </div>
+            <a class="left carousel-control" href="#carousel-example" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+            </a>
+            <a class="right carousel-control" href="#carousel-example" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right"></span>
+            </a>
+        </div>
+    </section>
+
+</body>
+</html>
+

@@ -19,6 +19,7 @@ namespace WebApplication4.Controllers
         {
             _context = context;
             qS = new LessonService(context);
+            ts = new TestService(context);
         }
 
         //// GET: Lessons
@@ -28,16 +29,36 @@ namespace WebApplication4.Controllers
         //}
 
         LessonService qS;
-      
+        TestService ts;
 
         public IActionResult Index()
         {
             return View("Index", qS.getAllLesson());
         }
 
-        public IActionResult ShowLesson(int id)
+        public ActionResult ShowLesson(int id)
         {
             return View("LessonPage", qS.getLessonById(id));
         }
+        
+        public IActionResult StartTest(int id)
+        {
+            QuizVM quizSelected = _context.Tests.Where(q => q.ID_LESSON == id).Select(q => new QuizVM
+            {
+                QuizID = q.ID_TEST,
+                QuizName = q.NAME_TEST,
+
+            }).FirstOrDefault();
+
+            if (quizSelected != null)
+            {
+                //TempData["SelectedQuiz"] = quizSelected;
+                //id_Test = quizSelected.QuizID;
+                return RedirectToAction("QuizTest", "Quizz", quizSelected);
+            }
+            return View("LessonPage", qS.getLessonById(id));
+            // return RedirectToAction("SelectQuizz",, ts.getTestById(id));
+        }
+
     }
 }

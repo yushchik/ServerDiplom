@@ -39,6 +39,28 @@ namespace WebApplication4.Repository
             }
         }
 
+        private TestRepository testRepository;
+        public TestRepository Tests
+        {
+            get
+            {
+                if (testRepository == null)
+                    testRepository = new TestRepository(db);
+                return testRepository;
+            }
+        }
+
+        private ResultRepository resultRepository;
+        public ResultRepository Result
+        {
+            get
+            {
+                if (resultRepository == null)
+                    resultRepository = new ResultRepository(db);
+                return resultRepository;
+            }
+        }
+
 
         public void Save()
         {

@@ -143,7 +143,7 @@
                 <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand logo">MiniBoss</a>
             </div>
             <div class="navbar-collapse collapse">
-               
+
                 <partial name="_LoginPartial" />
             </div>
         </div>
@@ -154,7 +154,7 @@
     <div class="container body-content">
         @RenderBody()
         <hr />
-        
+
     </div>
 
     <environment include="Development">
@@ -179,5 +179,6 @@
     </environment>
 
     @RenderSection("Scripts", required: false)
+    @RenderSection("MyScritps", required: false)
 </body>
 </html>

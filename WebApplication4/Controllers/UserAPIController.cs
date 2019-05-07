@@ -61,34 +61,49 @@ namespace WebApplication4.Controllers
         //Авторизация
         // GET: api/<controller>/password
         [HttpPost("login/")]
-        public async Task<String> Post([FromBody]Login login)
+        public async Task<JsonResult> Post([FromBody]Login login)
         {
             var result = await _signInManager.PasswordSignInAsync(login.UserName, login.PasswordHash, true, lockoutOnFailure: true);
+           
             if (result.Succeeded)
             {
                 _logger.LogInformation("User logged in.");
-                return "User logged in.";
-            }
-    
-            if (result.IsLockedOut)
-            {
-                _logger.LogWarning("User account locked out.");
-                return "User account locked out.";
+               
+                string uId = uS.getUserId(login.UserName);
+                return Json( uId);
             }
             else
             {
                 ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-                return "Invalid login attempt.";
+               
+                this.HttpContext.Response.StatusCode = 404; 
+               
+                return Json("Invalid login attempt.");
             }
-         
+           
+
+            //if (result.IsLockedOut)
+            //{
+
+            //    _logger.LogWarning("User account locked out.");
+            //    //return "User account locked out.";
+            //    return Json("User account locked out.");
+            //}
+            //else
+            //{
+            //    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+            //    //return "Invalid login attempt.";
+            //    return Json("Invalid login attempt.");
+            //}
+
             //uS.ChangePassword(password, login);
             //uS.Save();
             //return Json(uS.getUserByLogin(login));
         }
-       
+
         //Регистрация
         [HttpPost("registration/")]
-        public async Task<String> Post([FromBody]User user)
+        public async Task<JsonResult> Post([FromBody]User user)
         {
             if (ModelState.IsValid)
             {
@@ -109,16 +124,20 @@ namespace WebApplication4.Controllers
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
              
                     await _signInManager.SignInAsync(user, isPersistent: false);
-                    return "User created";
+                    string uId = uS.getUserId(user.UserName);
+                    return Json(uId);
                 }
                 foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
-                    return "User not created";
+                    this.HttpContext.Response.StatusCode = 404;
+
+                    return Json("Invalid login attempt.");
                 }
             }
+            this.HttpContext.Response.StatusCode = 405;
 
-            return "Model error";
+            return Json("Invalid user attempt.");
         }
     }
 }

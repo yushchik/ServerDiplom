@@ -85,11 +85,9 @@ namespace WebApplication4.Data.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.Property<string>("LoginProvider")
-                        .HasMaxLength(128);
+                    b.Property<string>("LoginProvider");
 
-                    b.Property<string>("ProviderKey")
-                        .HasMaxLength(128);
+                    b.Property<string>("ProviderKey");
 
                     b.Property<string>("ProviderDisplayName");
 
@@ -120,11 +118,9 @@ namespace WebApplication4.Data.Migrations
                 {
                     b.Property<string>("UserId");
 
-                    b.Property<string>("LoginProvider")
-                        .HasMaxLength(128);
+                    b.Property<string>("LoginProvider");
 
-                    b.Property<string>("Name")
-                        .HasMaxLength(128);
+                    b.Property<string>("Name");
 
                     b.Property<string>("Value");
 
@@ -194,7 +190,7 @@ namespace WebApplication4.Data.Migrations
 
                     b.Property<int>("ID_TEST");
 
-                    b.Property<int>("ID_USER");
+                    b.Property<string>("ID_USER");
 
                     b.Property<float>("RESULT");
 
@@ -277,6 +273,21 @@ namespace WebApplication4.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("WebApplication4.Models.UserChoice", b =>
+                {
+                    b.Property<int>("ChoiceID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ChoiceText");
+
+                    b.Property<int>("ID_QUESTION");
+
+                    b.HasKey("ChoiceID");
+
+                    b.ToTable("UserChoices");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

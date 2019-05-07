@@ -39,7 +39,6 @@ namespace WebApplication4.Services
 
         public void CreateLesson(Lesson lesson)
         {
-
             unitOfWork.Lessons.Create(lesson);
             unitOfWork.Save();
         }

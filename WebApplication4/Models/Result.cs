@@ -10,10 +10,10 @@ namespace WebApplication4.Models
     {
         [Key]
         public Int32 ID_RESULT { get; set; }
-        public Int32 ID_USER { get; set; }
+        public string ID_USER { get; set; }
         public Int32 ID_TEST { get; set; }
-        public float RESULT { get; set; }
-        public string RESULT_DATE { get; set; }
+        public double RESULT { get; set; }
+        public DateTime RESULT_DATE { get; set; }
 
     }
 }

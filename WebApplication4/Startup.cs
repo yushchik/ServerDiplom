@@ -45,16 +45,40 @@ namespace WebApplication4
 
             //services.AddIdentity<User, IdentityRole>()
             //    .AddEntityFrameworkStores<ApplicationDbContext>();
-            services.AddDefaultIdentity<User>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+            //services.AddDefaultIdentity<User>()
+            //    .AddEntityFrameworkStores<ApplicationDbContext>();
 
-           
-
+             services.AddIdentity<User, IdentityRole>()
+             //services.AddDefaultIdentity<IdentityUser>()
+             .AddEntityFrameworkStores<ApplicationDbContext>()
+             .AddDefaultUI()
+             .AddDefaultTokenProviders();
+            services.AddSession();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
+        //private async Task CreateUserRoles(IServiceProvider serviceProvider)
+        //{
+        //    var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+        //    var UserManager = serviceProvider.GetRequiredService<UserManager<User>>();
+
+        //    IdentityResult roleResult;
+        //    //Adding Admin Role
+        //    var roleCheck = await RoleManager.RoleExistsAsync("User");
+        //    if (!roleCheck)
+        //    {
+        //        //create the roles and seed them to the database
+        //        roleResult = await RoleManager.CreateAsync(new IdentityRole("User"));
+        //    }
+        //    //Assign Admin role to the main User here we have given our newly registered 
+        //    //login id for Admin management
+        //    //User user = await UserManager.FindByEmailAsync("PRIMAVER@MAIL.RU");
+        //    //var User = new User();
+        //    //await UserManager.AddToRoleAsync(user, "Admin");
+        //}
+
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider service)
         {
             if (env.IsDevelopment())
             {
@@ -70,7 +94,6 @@ namespace WebApplication4
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
-
             app.UseAuthentication();
 
             app.UseMvc(routes =>
@@ -79,6 +102,9 @@ namespace WebApplication4
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+            //CreateUserRoles(service).Wait();
         }
+
+     
     }
 }

@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication;
+using System.Net;
 
 namespace WebApplication4.Controllers
 {
@@ -68,9 +69,14 @@ namespace WebApplication4.Controllers
             if (result.Succeeded)
             {
                 _logger.LogInformation("User logged in.");
+                User user = uS.getUserByLogin(login.UserName);
                
-                string uId = uS.getUserId(login.UserName);
-                return Json( uId);
+                await _userManager.RemoveAuthenticationTokenAsync(user, "Default", "passwordless-auth");
+                var newRefreshToken = _userManager.GenerateUserTokenAsync(user, "Default", "passwordless-auth");
+               
+                await _userManager.SetAuthenticationTokenAsync(user, "Default", "passwordless-auth", await newRefreshToken);
+                return Json(newRefreshToken.Result);
+                //return Json(newRefreshToken);
             }
             else
             {
@@ -120,12 +126,12 @@ namespace WebApplication4.Controllers
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
-
-                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-             
-                    await _signInManager.SignInAsync(user, isPersistent: false);
-                    string uId = uS.getUserId(user.UserName);
-                    return Json(uId);
+                     await _signInManager.SignInAsync(user, isPersistent: false);
+                    string uId = uS.getUserId(user.UserName);                  
+                    var newRefreshToken = _userManager.GenerateUserTokenAsync(user, "Default", "passwordless-auth");
+                    await _userManager.SetAuthenticationTokenAsync(user, "Default", "passwordless-auth", await newRefreshToken);
+                    return Json(newRefreshToken.Result);
+                    //return Json(uId);
                 }
                 foreach (var error in result.Errors)
                 {

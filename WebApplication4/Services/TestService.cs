@@ -38,5 +38,15 @@ namespace WebApplication4.Services
             }
             return null;
         }
+
+        public int getLessonIdByTestId2(int testID)
+        {
+            foreach (Test u in unitOfWork.Tests.GetAll())
+            {
+                if (u.ID_TEST.Equals(testID))
+                    return u.ID_LESSON;
+            }
+            return 0;
+        }
     }
 }

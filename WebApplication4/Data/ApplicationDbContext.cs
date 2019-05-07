@@ -15,7 +15,7 @@ namespace WebApplication4.Data
         public DbSet<Question> Question { get; set; }
         public DbSet<Answer> Answer { get; set; }
         public DbSet<UserChoice> UserChoices { get; set; }
-
+        public DbSet<UserProgress> UserProgress { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {

@@ -20,6 +20,8 @@ namespace WebApplication4.Controllers
             _context = context;
             qS = new LessonService(context);
             ts = new TestService(context);
+            uS = new UserService(context);
+            upS = new UserProgressService(context);
         }
 
         //// GET: Lessons
@@ -30,9 +32,15 @@ namespace WebApplication4.Controllers
 
         LessonService qS;
         TestService ts;
+        UserService uS;
+        UserProgressService upS;
 
         public IActionResult Index()
         {
+            qS.getAllLesson();
+            String userName = User.Identity.Name;
+            String userID = uS.getUserId(userName);
+            ViewData["Progress"] = upS.getLessonIdByUserId(userID);
             return View("Index", qS.getAllLesson());
         }
 

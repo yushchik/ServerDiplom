@@ -1,12 +1,31 @@
 ﻿@model IQueryable<WebApplication4.Models.QuestionVM>
 @{
     int count = 1, countR = 0;
+   
+
 }
 <html>
 <head>
 
     <meta charset="utf-8">
     <style>
+        body {
+            --main-font: 'Roboto', sans-serif;
+            --header-font: 'Anton', sans-serif;
+            --text-font: Georgia, 'Times New Roman', Times, serif;
+            --main-color: #FA9307;
+            --light-color: #FA9307;
+            --white: #fff;
+            --black: #222;
+            --gray: #F7F6F6;
+            --dark-white: #f5f5f5;
+            --shadow: 0px 0px 6px 2px var(--dark-white);
+            --space: 15px;
+            --screw: 4px;
+            --link-color: #FA9307;
+            background-color: var(--gray) !important;
+            color: var(--black) !important;
+        }
         .label-info {
             background-color: white;
             font-size: 30px;
@@ -40,6 +59,21 @@
             padding-left: 2%;
             padding-top: 2%;
             padding-bottom: 1%;
+        }
+        .testhref {
+            margin-top: 10px;
+            margin-bottom: 10px;
+            box-shadow: 0 0 5px;
+            font-size: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            margin-right: 20px;
+            text-align: end
+        }
+        a {
+            color: var(--light-color);
         }
     </style>
 </head>
@@ -84,11 +118,12 @@
                     count++;
                 }
                 <span id="countQuections" style="display:none;">@count</span>
-                <div id="">
+              
+                <div class="form-group">
 
-                    <a class="testhref" id="NextL" style="color:aqua;" href="~/Quizz/ShowNextLesson/?testName=@ViewData["TestTitle"]" >Следующий урок </a>
+                    <a class="testhref" id="NextL" href="~/Quizz/ShowNextLesson/?testName=@ViewData["TestTitle"]" >Следующий урок </a>
                 </div>
-               
+                
                 <button type="button" id="SubmitQuiz" class="btn btn-default" style="margin-top: 10px;"><span class="glyphicon glyphicon-ok"></span>  Завершить тест </button>
 
 
@@ -114,13 +149,17 @@
                 var resultQuiz = [], countQuestion = parseInt(sel), question = {}, j = 1;
 
                 for (var i = 1; i < countQuestion; i++) {
+                    if ($('input[name=inlineRadioOptions' + i + ']:checked').val() == null) {
+                        $('#AnsQ' + i).html('<div class="alert alert-danger" role="alert"> <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span> Ответ не выбран </div>');
+                    } else {
                     question = {
                         QuestionID: $('#ID_Q'+ i).text(),
                         QuestionText: $('#Q' + i).text(),
                         AnswerQ: $('input[name=inlineRadioOptions' + i + ']:checked').val()
                     }
 
-                    resultQuiz.push(question);
+                        resultQuiz.push(question);
+                    }
                 }
 
                 $.ajax({

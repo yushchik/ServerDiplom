@@ -1,6 +1,7 @@
 ﻿@model IEnumerable<WebApplication4.Models.Lesson>
 @{
-
+    var progress = @ViewData["Progress"];
+    int p = (int)progress;
 }
 <html>
 <head>
@@ -111,16 +112,26 @@
     <div class="container">
         <div class="row">
             <table class="table">
-
+                
                 @foreach (var item in Model)
                 {
-                    <tr>
-                        <td>@item.TITLE_LESSON </td>
+                    
+                <tr>
 
-                        <td>
-                            <a href="~/Lessons/ShowLesson/?id=@item.ID_LESSON">Show</a>
-                        </td>
-                    </tr>
+                    <td>@item.TITLE_LESSON </td>
+                    @if (@item.ID_LESSON > p + 1)
+                    {
+                    <td>
+                        <a href="~/Lessons/ShowLesson/?id=@item.ID_LESSON" style="visibility:hidden">Изучить</a>
+                    </td>
+                    }
+                    else
+                    {
+                    <td>
+                        <a href="~/Lessons/ShowLesson/?id=@item.ID_LESSON">Show</a>
+                    </td>
+                    }
+                </tr>
                 }
             </table>
         </div>

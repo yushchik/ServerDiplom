@@ -61,6 +61,17 @@ namespace WebApplication4.Repository
             }
         }
 
+        private UserProgressRepository userProgressRepository;
+        public UserProgressRepository UserProgress
+        {
+            get
+            {
+                if (userProgressRepository == null)
+                    userProgressRepository = new UserProgressRepository(db);
+                return userProgressRepository;
+            }
+        }
+
 
         public void Save()
         {

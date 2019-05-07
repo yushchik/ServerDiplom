@@ -15,13 +15,14 @@ namespace WebApplication4.Controllers
     public class QuizzController : Controller
     {
         int count;
-        int testID, QuesId, LessonId;
-
+       public int testID, QuesId, LessonId;
+        int allCount;
         public ApplicationDbContext dbContext;
         LessonService qS;
         ResultService rS;
         UserService uS;
         TestService tS;
+        UserProgressService upS;
         UserManager<User> _userManager;
         SignInManager<User> _SignInManager;
 
@@ -33,6 +34,7 @@ namespace WebApplication4.Controllers
             rS = new ResultService(context);
             uS = new UserService(context);
             tS = new TestService(context);
+            upS = new UserProgressService(context);
             _userManager = userManager;
             _SignInManager = SignInManager;
         }
@@ -106,6 +108,9 @@ namespace WebApplication4.Controllers
 
                    }).AsQueryable();
                 ViewData["TestTitle"] = sendFlag.QuizName;
+                TempData["SigmaData"] = questions.Count();
+          
+                LessonId = questions.Count();
                // TestId = sendFlag.QuizID;
             }
 
@@ -116,9 +121,10 @@ namespace WebApplication4.Controllers
         public ActionResult QuizTest(List<QuizAnswersVM> resultQuiz)
         {
             List<QuizAnswersVM> finalResultQuiz = new List<QuizAnswersVM>();
-
+            
             foreach (QuizAnswersVM answser in resultQuiz)
             {
+
                 QuizAnswersVM result = dbContext.Answer.Where(a => a.ID_QUESTION == answser.QuestionID).Select(a => new QuizAnswersVM
                 {          
                     QuestionID = a.ID_QUESTION,
@@ -142,8 +148,7 @@ namespace WebApplication4.Controllers
                 } 
             }
             double correcCount = count;
-            double allCount = finalResultQuiz.Count;
-            double proc = correcCount / allCount * 100;
+           
 
             String userName = User.Identity.Name;
             foreach (Question u in dbContext.Question)
@@ -160,6 +165,13 @@ namespace WebApplication4.Controllers
             //        RESULT = count3,
             //        RESULT_DATE = DateTime.Now
             //    }).FirstOrDefault();
+            IQueryable<QuestionVM> questions = dbContext.Question.Where(q => q.ID_TEST == testID)
+                  .Select(q => new QuestionVM
+                  {
+                      QuestionID = q.ID_QUESTION,
+                   }).AsQueryable();
+            allCount = questions.Count(); /*(int)TempData["SigmaData"]; *///finalResultQuiz.Count;
+            double proc = correcCount / allCount * 100;
             Result Result = new Result
             {
                 ID_USER = uS.getUserId(userName),
@@ -168,14 +180,16 @@ namespace WebApplication4.Controllers
                 RESULT_DATE = DateTime.Now
             };
             rS.CreateResult(Result);
-            //if(proc >= 10)
-            //{
-            //    int nextLes = testID + 1;
-            //    //var result1 = new LessonsController(dbContext).ShowLesson(nextLes);
-            //    //return result1;
-            //    return RedirectToAction("LessonPage", "Lessons", tS.getLessonIdByTestId(nextLes));
-            //}
-            
+            if (proc >= 50)
+            {
+                upS.ChangProgress(uS.getUserId(userName), tS.getLessonIdByTestId2(testID));
+               
+            }
+            else
+            {
+             
+            }
+
             return Json(new { result = finalResultQuiz });
 
 
@@ -183,9 +197,14 @@ namespace WebApplication4.Controllers
         
         public IActionResult ShowNextLesson(string testName)
         {
+            String userName = User.Identity.Name;
+            String userID = uS.getUserId(userName);
+            upS.getLessonIdByUserId(userID);
             Test test = tS.getLessonIdByTestId(testName);
             int nextLes = test.ID_LESSON + 1;
-            return RedirectToAction("ShowLesson", "Lessons", new { id = nextLes });
+            //if (upS.getLessonIdByUserId(userID) == test.ID_LESSON)
+            //{
+                return RedirectToAction("ShowLesson", "Lessons", new { id = nextLes });
         }
 
 

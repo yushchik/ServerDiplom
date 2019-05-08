@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication;
 using System.Net;
+using System.Security.Claims;
 
 namespace WebApplication4.Controllers
 {
@@ -73,7 +74,7 @@ namespace WebApplication4.Controllers
                
                 await _userManager.RemoveAuthenticationTokenAsync(user, "Default", "passwordless-auth");
                 var newRefreshToken = _userManager.GenerateUserTokenAsync(user, "Default", "passwordless-auth");
-               
+                
                 await _userManager.SetAuthenticationTokenAsync(user, "Default", "passwordless-auth", await newRefreshToken);
                 return Json(newRefreshToken.Result);
                 //return Json(newRefreshToken);

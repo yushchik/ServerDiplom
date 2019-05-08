@@ -26,12 +26,12 @@ namespace WebApplication4.Controllers
         }
 
         [HttpGet]
-        public JsonResult QuizTest(int testID)
+        public JsonResult QuizTest([FromHeader]int lessonId)
         {
             //QuizVM quizSelected = (QuizVM) TempData["SelectedQuiz"] ;
             IQueryable<QuestionVM> questions = null;
-
-            if (testID != null)
+            int testID = ts.getTestIdById(lessonId);
+            if (testID != 0)
             {
                 questions = _context.Question.Where(q => q.ID_TEST == testID)
                    .Select(q => new QuestionVM

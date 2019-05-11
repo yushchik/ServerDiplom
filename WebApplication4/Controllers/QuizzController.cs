@@ -182,8 +182,18 @@ namespace WebApplication4.Controllers
             rS.CreateResult(Result);
             if (proc >= 50)
             {
-                upS.ChangProgress(uS.getUserId(userName), tS.getLessonIdByTestId2(testID));
-               
+                UserProgress user = upS.getUserProgressByUserId(uS.getUserId(userName));
+                if (user == null)
+                {
+                    upS.ChangProgress(uS.getUserId(userName), tS.getLessonIdByTestId2(testID));
+                }
+                else
+                {
+                    if (user.Id_Lesson_Learned < tS.getLessonIdByTestId2(testID))
+                    {
+                        upS.ChangProgress(uS.getUserId(userName), tS.getLessonIdByTestId2(testID));
+                    }
+                }
             }
             else
             {

@@ -1,6 +1,7 @@
 ﻿@model Lesson
 @{
     ViewData["Title"] = "Lesson";
+    int test = (int)ViewData["Test"];
 }
 
 
@@ -140,6 +141,7 @@
             margin-bottom: 20px;
             margin-right: 20px;
             font-size: 15px;
+            text-align:justify;
         }
         .titleLesson{
             margin-top:30px;
@@ -158,9 +160,19 @@
         <div class="video">
             <iframe width="560" height="315" src="@Model.VIDEO" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
-        <div class="form-group" >
-            <a class="testhref" href="~/Lessons/StartTest/?id=@Model.ID_LESSON">Начать тест</a>
-        </div>
+        @if (test == 1)
+        {
+            <div class="form-group">
+                <a class="testhref" href="~/Lessons/StartTest/?id=@Model.ID_LESSON">Начать тест</a>
+            </div>
+        }
+        @if (test == 0)
+        {
+            <div class="form-group">
+
+                <a class="testhref" id="NextL" href="~/Lessons/ShowNextLesson/?lessonId=@Model.ID_LESSON">Следующий урок </a>
+            </div>
+        }
     </div>
 </body>
 </html>

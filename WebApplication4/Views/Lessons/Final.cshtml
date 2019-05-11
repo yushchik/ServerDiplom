@@ -1,4 +1,4 @@
-﻿@model Test
+﻿@model User
 @{
     ViewData["Title"] = "Lesson";
 }
@@ -128,6 +128,14 @@
     <script src="https://cdn.ckeditor.com/ckeditor5/11.0.1/classic/ckeditor.js"></script>
 </head>
 <body>
-   
+    <div class="titleLesson">
+        <h2 style="text-align:center; margin-top:20px; color:var(--main-color)"> @Model.NAME</h2>
+    </div>
+    <div class="text">
+        <h5 style="text-align:justify; margin-top:20px; text-transform:none; font-size: 20px"> Поздравляем с устпешным прохождением курса. Вы освоили основы финансовой грамотности вместе с нами. </h5>
+
+        <h5 style="text-align:justify; text-transform:none; font-size: 20px"> Благодарим за активность и упорство. Надеемся, тебе все понравилось и курс не был скучным.</h5>
+    </div>
+    <img src="https://images.wallpaperscraft.ru/image/fon_temnyy_pelena_87441_1280x720.jpg" />
 </body>
 </html>

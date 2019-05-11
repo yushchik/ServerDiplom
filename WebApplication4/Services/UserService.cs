@@ -41,7 +41,15 @@ namespace WebApplication4.Services
             }
             return "";
         }
-
+        public User getUser(string userNane)
+        {
+            foreach (User u in unitOfWork.Users.GetAll())
+            {
+                if (u.UserName.Equals(userNane))
+                    return u;
+            }
+            return null;
+        }
         public void ChangePassword(string password, string userLogin)
         {
             User user = getUserByLogin(userLogin);

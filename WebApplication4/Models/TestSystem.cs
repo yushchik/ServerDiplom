@@ -30,6 +30,21 @@ namespace WebApplication4.Models
         public string ChoiceText { get; set; }
     }
 
+    public class QuestionVMA
+    {
+        public int QuestionID { get; set; }
+        public string QuestionText { get; set; }
+        public string QuestionType { get; set; }
+        public string Anwser { get; set; }
+        public ICollection<ChoiceVMA> Choices { get; set; }
+    }
+
+    public class ChoiceVMA
+    {
+        public int ChoiceID { get; set; }
+        public string ChoiceText { get; set; }
+        public int isTrue { get; set; }
+    }
     public class QuizAnswersVM
     {
         public int QuestionID { get; set; }

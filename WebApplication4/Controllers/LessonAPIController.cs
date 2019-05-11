@@ -47,8 +47,8 @@ namespace WebApplication4.Controllers
 
         // получить конкретный урок
         // GET: api/<controller>
-        [HttpGet("AllLesson/{id_lesson}")]
-        public JsonResult Get(int id_lesson)
+        [HttpGet("OneLesson")]
+        public JsonResult Get([FromHeader]int id_lesson)
         {
             return Json(qS.getLessonById(id_lesson));
         }
@@ -60,6 +60,23 @@ namespace WebApplication4.Controllers
            // String userName = User.Identity.Name;
             String userID = uS.getUserId(userName);
             return Json(upS.getLessonIdByUserId(userID));
+        }
+
+        [HttpGet("HasATest")]
+        public JsonResult Get([FromHeader]double id)
+        {
+
+            int idT = (int)id;
+            Test test = ts.getTestById(idT);
+            if (test == null)
+            {
+                return Json("0");
+            }
+            else
+            {
+                return Json("1");
+            }
+
         }
 
     }

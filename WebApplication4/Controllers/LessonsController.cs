@@ -46,7 +46,18 @@ namespace WebApplication4.Controllers
 
         public ActionResult ShowLesson(int id)
         {
-            return View("LessonPage", qS.getLessonById(id));
+            Test test = ts.getTestById(id);
+            if(test == null)
+            {
+                ViewData["Test"] = 0;
+                return View("LessonPage", qS.getLessonById(id));
+            }
+            else
+            {
+                ViewData["Test"] = 1;
+                return View("LessonPage", qS.getLessonById(id));
+            }
+            
         }
         
         public IActionResult StartTest(int id)
@@ -66,6 +77,28 @@ namespace WebApplication4.Controllers
             }
             return View("LessonPage", qS.getLessonById(id));
             // return RedirectToAction("SelectQuizz",, ts.getTestById(id));
+        }
+
+        public IActionResult ShowNextLesson(int lessonId)
+        {
+            String userName = User.Identity.Name;
+            UserProgress user =  upS.getUserProgressByUserId(uS.getUserId(userName));
+            if (user.Id_Lesson_Learned < lessonId)
+            {
+                upS.ChangProgress(uS.getUserId(userName), lessonId);
+            }
+            int nextLes = lessonId + 1;
+            Lesson lesson = qS.getLessonById(nextLes);
+            if (lesson == null)
+            {
+                User User = uS.getUser(userName);
+                
+                return View("Final", User);
+            }
+            else
+            {
+                return RedirectToAction("ShowLesson", "Lessons", new { id = nextLes });
+            }
         }
 
     }

@@ -1,7 +1,7 @@
 ﻿@model IQueryable<WebApplication4.Models.QuestionVM>
 @{
     int count = 1, countR = 0;
-   
+    var testname = @ViewData["TestTitle"];
 
 }
 <html>
@@ -23,7 +23,7 @@
             --space: 15px;
             --screw: 4px;
             --link-color: #FA9307;
-            background-color: var(--gray) !important;
+            background-color: var(--white) !important;
             color: var(--black) !important;
         }
         .label-info {
@@ -62,9 +62,8 @@
         }
         .testhref {
             margin-top: 10px;
-            margin-bottom: 10px;
-            box-shadow: 0 0 5px;
-            font-size: 30px;
+            margin-bottom: 10px; 
+            font-size: 20px;
         }
 
         .form-group {
@@ -74,6 +73,7 @@
         }
         a {
             color: var(--light-color);
+            
         }
     </style>
 </head>
@@ -119,13 +119,13 @@
                 }
                 <span id="countQuections" style="display:none;">@count</span>
               
-                <div class="form-group">
+                <div id="@string.Format("Href")" style="align-content:flex-end">
 
-                    <a class="testhref" id="NextL" href="~/Quizz/ShowNextLesson/?testName=@ViewData["TestTitle"]" >Следующий урок </a>
+                    <button type="button" id="SubmitQuiz" class="btn btn-default" style="margin-top: 10px;"><span class="glyphicon glyphicon-ok"></span>  Завершить тест </button>
+
                 </div>
-                
-                <button type="button" id="SubmitQuiz" class="btn btn-default" style="margin-top: 10px;"><span class="glyphicon glyphicon-ok"></span>  Завершить тест </button>
-
+             
+               
 
             }
 
@@ -187,14 +187,13 @@
                                 }
                                 j++;
                             }
-                            
-                            //var proc = count / response.result.length * 100;
-                            //if (proc > 10) {
-                                             
-                            //}
-                            //else {
 
-                            //}
+                            var proc = count / countQuestion * 100;
+
+                            if (proc > 40) {
+                                $('#Href').html(' <a class="testhref" id="NextL" href="@Url.Action("ShowNextLesson", "Quizz", new { testName = testname })" >Следующий урок </a>');
+
+                            }
                         }
                         else
                         {
@@ -217,6 +216,7 @@
 
 
         });
+
 
     </script>
     }

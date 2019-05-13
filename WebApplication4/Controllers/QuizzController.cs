@@ -176,8 +176,8 @@ namespace WebApplication4.Controllers
             {
                 ID_USER = uS.getUserId(userName),
                 ID_TEST = testID,
-                RESULT = proc,
-                RESULT_DATE = DateTime.Now
+                RESULT = (float)proc,
+                RESULT_DATE2 = DateTime.Now
             };
             rS.CreateResult(Result);
             if (proc >= 50)

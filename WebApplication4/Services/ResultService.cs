@@ -37,6 +37,21 @@ namespace WebApplication4.Services
             return null;
         }
 
+        public List<Result> getResultByTest(int idTest)
+        {
+            List<Result> list = new List<Result>();
+            foreach (Result u in unitOfWork.Result.GetAll())
+            {
+
+                if (u.ID_TEST.Equals(idTest))
+                {
+                    list.Add(u);
+                }
+                    
+            }
+            return list;
+        }
+
         public void CreateResult(Result result)
         {
             unitOfWork.Result.Create(result);

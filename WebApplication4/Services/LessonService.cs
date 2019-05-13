@@ -37,6 +37,16 @@ namespace WebApplication4.Services
             return null;
         }
 
+        public String getLessonTitleById(int id_lesson)
+        {
+            foreach (Lesson u in unitOfWork.Lessons.GetAll())
+            {
+                if (u.ID_LESSON.Equals(id_lesson))
+                    return u.TITLE_LESSON;
+            }
+            return null;
+        }
+
         public void CreateLesson(Lesson lesson)
         {
             unitOfWork.Lessons.Create(lesson);

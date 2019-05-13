@@ -15,7 +15,14 @@ namespace WebApplication4.Controllers
 
             if (User.Identity.IsAuthenticated)
             {
-                return RedirectToAction("Index", "Lessons");
+                if (User.IsInRole("Admin"))
+                {
+                    return RedirectToAction("Index", "Admin");
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Lessons");
+                }
             }
             else { return View(); }
         }

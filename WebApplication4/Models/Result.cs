@@ -12,8 +12,8 @@ namespace WebApplication4.Models
         public Int32 ID_RESULT { get; set; }
         public string ID_USER { get; set; }
         public Int32 ID_TEST { get; set; }
-        public double RESULT { get; set; }
-        public DateTime RESULT_DATE { get; set; }
+        public float RESULT { get; set; }
+        public DateTime RESULT_DATE2 { get; set; }
 
     }
 }

@@ -58,5 +58,21 @@ namespace WebApplication4.Services
             }
             return 0;
         }
+
+        public IEnumerable<Test> getAllTests()
+        {
+            return unitOfWork.Tests.GetAll();
+        }
+
+        public String getTestNameById(int testId)
+        {
+            foreach (Test u in unitOfWork.Tests.GetAll())
+            {
+                if (u.ID_TEST.Equals(testId))
+                    return u.NAME_TEST;
+            }
+            return "";
+        }
+
     }
 }

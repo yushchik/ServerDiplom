@@ -1,0 +1,132 @@
+﻿@model IEnumerable<WebApplication4.Models.UsersForAdmin>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<html>
+<head>
+    <link rel="stylesheet" href="~/css/style.css" />
+    <style>
+        body {
+            --main-font: 'Roboto', sans-serif;
+            --header-font: 'Anton', sans-serif;
+            --main-color: #FA9307;
+            --light-color: #FA9307;
+            --white: #fff;
+            --black: #222;
+            --gray: #888;
+            --dark-white: #f5f5f5;
+            --shadow: 0px 0px 6px 2px var(--dark-white);
+            --space: 15px;
+            --screw: 4px;
+            --link-color: #FA9307;
+            background-color: var(--white) !important;
+            color: var(--black) !important;
+        }
+
+        h1, h2, h3, h4, h5, h6, .logo {
+            font-family: var(--header-font);
+            text-transform: uppercase;
+            margin-top: 0;
+        }
+
+        .logo {
+            font-size: 1.6em;
+        }
+
+        a {
+            color: var(--light-color);
+        }
+
+        td {
+            color: var(--black);
+        }
+        .jk-slider {
+            width: auto;
+            height: auto;
+        }
+        /*          Hero Headers        */
+        /********************************/
+        .hero {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            z-index: 3;
+            color: #fff;
+            text-align: center;
+            text-transform: uppercase;
+            text-shadow: 1px 1px 0 rgba(0,0,0,.75);
+            -webkit-transform: translate3d(-50%,-50%,0);
+            -moz-transform: translate3d(-50%,-50%,0);
+            -ms-transform: translate3d(-50%,-50%,0);
+            -o-transform: translate3d(-50%,-50%,0);
+            transform: translate3d(-50%,-50%,0);
+        }
+
+            .hero h1 {
+                font-size: 6em;
+                font-weight: bold;
+                margin: 0;
+                padding: 0;
+            }
+
+        .fade-carousel .carousel-inner .item .hero {
+            opacity: 0;
+            -webkit-transition: 2s all ease-in-out .1s;
+            -moz-transition: 2s all ease-in-out .1s;
+            -ms-transition: 2s all ease-in-out .1s;
+            -o-transition: 2s all ease-in-out .1s;
+            transition: 2s all ease-in-out .1s;
+        }
+
+        .fade-carousel .carousel-inner .item.active .hero {
+            opacity: 1;
+            -webkit-transition: 2s all ease-in-out .1s;
+            -moz-transition: 2s all ease-in-out .1s;
+            -ms-transition: 2s all ease-in-out .1s;
+            -o-transition: 2s all ease-in-out .1s;
+            transition: 2s all ease-in-out .1s;
+        }
+
+        .navbar {
+            margin-bottom: 0px;
+        }
+        .rtroot {
+            background-color: var(--main-color) !important;
+        }
+    </style>
+</head>
+<body>
+    <br />
+    <div class="container">
+        <div class="row">
+            <table class="table">
+                <tr class="rtroot">
+                    <th>Email</th>
+                    <th>Фамилия</th>
+                    <th>Имя</th>
+                    <th>Город</th>
+                    <th>День Рождения</th>
+
+                    <th>Прогресс</th>
+                </tr>
+                @foreach (var item in Model)
+                {
+
+
+                <tr>
+                    <td>@item.Email </td>
+                    <td>@item.SURNAME</td>
+                    <td>@item.NAME</td>
+                    <td>@item.CITY</td>
+                    <td>@item.BIRTHDAY</td>
+                    <td>@item.TITLELESSON</td>
+
+                </tr>
+                }
+            </table>
+        </div>
+    </div>
+</body>
+</html>
+

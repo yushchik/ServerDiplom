@@ -83,10 +83,18 @@ namespace WebApplication4.Controllers
         {
             String userName = User.Identity.Name;
             UserProgress user =  upS.getUserProgressByUserId(uS.getUserId(userName));
-            if (user.Id_Lesson_Learned < lessonId)
+            if (user == null)
             {
                 upS.ChangProgress(uS.getUserId(userName), lessonId);
             }
+            else
+            {
+                if (user.Id_Lesson_Learned < lessonId)
+                {
+                    upS.ChangProgress(uS.getUserId(userName), lessonId);
+                }
+            }
+
             int nextLes = lessonId + 1;
             Lesson lesson = qS.getLessonById(nextLes);
             if (lesson == null)

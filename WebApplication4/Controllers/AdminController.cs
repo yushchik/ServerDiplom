@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -42,9 +43,9 @@ namespace WebApplication4.Controllers
             rS = new ResultService(context);
             upS = new UserProgressService(context);
             _userManager = userManager;
-        } 
+        }
 
-
+        [Authorize(Roles = "Admin")]
         public IActionResult Index()
         {
             List<User> finalResultQuiz = new List<User>();
@@ -66,54 +67,41 @@ namespace WebApplication4.Controllers
             return View("Index", usersForAdmins);
         }
 
-
-        public IActionResult Results()
-        {
+        [Authorize(Roles = "Admin")]
+        public IActionResult Results(){
             List<Test> tests = new List<Test>();
             tests = tS.getAllTests().ToList();
             List<Result> testsResults = new List<Result>();
             testsResults = rS.getAllLesson().ToList();
             List<TestsResults> results = new List<TestsResults>();
-
-            for (int i = 0; i < tests.Count; i++)
-            {
-
+            for (int i = 0; i < tests.Count; i++) {
                 TestsResults testsresults = new TestsResults();
                 List<Result> testsResults2 = new List<Result>();
                 testsResults2 = rS.getResultByTest(tests.ElementAt(i).ID_TEST);
                 int successfullyPass = 0, failsToPass = 0;
                 double percent;
-                for (int j = 0; j < testsResults2.Count; j++)
-                {
-
-                    if (testsResults2.ElementAt(j).RESULT >= 50)
-                    {
-                        successfullyPass++;
-                    }
-                    else
-                    {
-                        failsToPass++;
-                    }
-
-                }
+                for (int j = 0; j < testsResults2.Count; j++) {
+                    if (testsResults2.ElementAt(j).RESULT >= 50) { successfullyPass++;}
+                    else { failsToPass++; }  }
                 double testcount = testsResults2.Count;
                 double count = successfullyPass;
                 if (count != 0)
-                {
-                    percent = successfullyPass / testcount * 100;
-                }
-                else
-                {
-                    percent = 0;
-                }
+                { percent = successfullyPass / testcount * 100; }
+                else {  percent = 0; }
                 testsresults.NAME_TEST = tS.getTestNameById(tests.ElementAt(i).ID_TEST);
                 testsresults.allPassed = testsResults2.Count;
                 testsresults.successfullyPass = successfullyPass;
                 testsresults.failsToPass = failsToPass;
                 testsresults.percent = percent;
-                results.Add(testsresults);
-            }
+                results.Add(testsresults);   }
             return View("Results", results);
+        }
+
+        [Authorize(Roles = "Admin")]
+        public IActionResult CreateLesson()
+        {
+          
+            return View("CreateLesson");
         }
     }
 }

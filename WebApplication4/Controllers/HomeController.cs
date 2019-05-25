@@ -12,7 +12,6 @@ namespace WebApplication4.Controllers
     {
         public IActionResult Index()
         {
-
             if (User.Identity.IsAuthenticated)
             {
                 if (User.IsInRole("Admin"))

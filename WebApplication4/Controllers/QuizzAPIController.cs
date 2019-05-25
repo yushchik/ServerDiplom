@@ -83,70 +83,62 @@ namespace WebApplication4.Controllers
                 finalResultQuiz.Add(result);
             }
 
-            //for (int i = 0; i < finalResultQuiz.Count; i++)
-            //{
-            //    if (finalResultQuiz.ElementAt(i).isCorrect == true)
-            //    {
-            //        count++;
-            //        QuesId = finalResultQuiz.ElementAt(i).QuestionID;
-            //    }
-            //    else
-            //    {
-            //        QuesId = finalResultQuiz.ElementAt(i).QuestionID;
-            //    }
-            //}
-            //double correcCount = count;
+            for (int i = 0; i < finalResultQuiz.Count; i++)
+            {
+                if (finalResultQuiz.ElementAt(i).isCorrect == true)
+                {
+                    count++;
+                    QuesId = finalResultQuiz.ElementAt(i).QuestionID;
+                }
+                else
+                {
+                    QuesId = finalResultQuiz.ElementAt(i).QuestionID;
+                }
+            }
+            double correcCount = count;
 
 
-            //String userName = User.Identity.Name;
-            //foreach (Question u in _context.Question)
-            //{
-            //    if (u.ID_QUESTION.Equals(QuesId))
-            //        testID = u.ID_TEST;
+            String userName = User.Identity.Name;
+            foreach (Question u in _context.Question)
+            {
+                if (u.ID_QUESTION.Equals(QuesId))
+                    testID = u.ID_TEST;
 
-            //}
-            ////Result Result = dbContext.Tests.Where(a => a.ID_TEST == TestId)
-            ////    .Select(a => new Result
-            ////    {
-            ////        ID_USER = uS.getUserId(userName),
-            ////        ID_TEST = a.ID_TEST,
-            ////        RESULT = count3,
-            ////        RESULT_DATE = DateTime.Now
-            ////    }).FirstOrDefault();
-            //IQueryable<QuestionVM> questions = _context.Question.Where(q => q.ID_TEST == testID)
-            //      .Select(q => new QuestionVM
-            //      {
-            //          QuestionID = q.ID_QUESTION,
-            //      }).AsQueryable();
-            //allCount = questions.Count(); /*(int)TempData["SigmaData"]; *///finalResultQuiz.Count;
-            //double proc = correcCount / allCount * 100;
-            //Result Result = new Result
-            //{
-            //    ID_USER = uS.getUserId(userName),
-            //    ID_TEST = testID,
-            //    RESULT = proc,
-            //    RESULT_DATE = DateTime.Now
-            //};
-            //rS.CreateResult(Result);
-            //if (proc >= 50)
-            //{
-            //    UserProgress user = upS.getUserProgressByUserId(uS.getUserId(userName));
-            //    if (user == null)
-            //    {
-            //        upS.ChangProgress(uS.getUserId(userName), ts.getLessonIdByTestId2(testID));
-            //    }
-            //    else
-            //    {
-            //        if (user.Id_Lesson_Learned < ts.getLessonIdByTestId2(testID))
-            //        {
-            //            upS.ChangProgress(uS.getUserId(userName), ts.getLessonIdByTestId2(testID));
-            //        }
-            //    }
-            //}
-            //else
-            //{
+            }
+           IQueryable<QuestionVM> questions = _context.Question.Where(q => q.ID_TEST == testID)
+                  .Select(q => new QuestionVM
+                  {
+                      QuestionID = q.ID_QUESTION,
+                  }).AsQueryable();
+            allCount = questions.Count(); /*(int)TempData["SigmaData"]; *///finalResultQuiz.Count;
+            double proc = correcCount / allCount * 100;
+            Result Result = new Result
+            {
+                ID_USER = uS.getUserId(userName),
+                ID_TEST = testID,
+                RESULT = (float)proc,
+                RESULT_DATE2 = DateTime.Now
+            };
+            rS.CreateResult(Result);
+            if (proc >= 50)
+            {
+                UserProgress user = upS.getUserProgressByUserId(uS.getUserId(userName));
+                if (user == null)
+                {
+                    upS.ChangProgress(uS.getUserId(userName), ts.getLessonIdByTestId2(testID));
+                }
+                else
+                {
+                    if (user.Id_Lesson_Learned < ts.getLessonIdByTestId2(testID))
+                    {
+                        upS.ChangProgress(uS.getUserId(userName), ts.getLessonIdByTestId2(testID));
+                    }
+                }
+            }
+            else
+            {
 
-            //}
+            }
 
             return Json(finalResultQuiz);
 

@@ -195,14 +195,8 @@ namespace WebApplication4.Controllers
                     }
                 }
             }
-            else
-            {
-             
-            }
-
+            else { }
             return Json(new { result = finalResultQuiz });
-
-
         }
         
         public IActionResult ShowNextLesson(string testName)
@@ -214,7 +208,18 @@ namespace WebApplication4.Controllers
             int nextLes = test.ID_LESSON + 1;
             //if (upS.getLessonIdByUserId(userID) == test.ID_LESSON)
             //{
+            Lesson lesson = qS.getLessonById(nextLes);
+            if (lesson == null)
+            {
+                User User = uS.getUser(userName);
+
+                return View("Final",  User);
+            }
+            else
+            {
                 return RedirectToAction("ShowLesson", "Lessons", new { id = nextLes });
+            }
+           // return RedirectToAction("ShowLesson", "Lessons", new { id = nextLes });
         }
 
 

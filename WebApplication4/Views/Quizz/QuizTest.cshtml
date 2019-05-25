@@ -179,11 +179,11 @@
                                 {
                                     count++;
 
-                                    $('#AnsQ' + j).html('<div class="alert alert-success" role="alert"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Correct answer</div>');
+                                    $('#AnsQ' + j).html('<div class="alert alert-success" role="alert"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Правильный ответ </div>');
                                 }
                                 else
                                 {
-                                    $('#AnsQ' + j).html('<div class="alert alert-danger" role="alert"> <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span> Incorrect answer - The Good Answer is <b>' + response.result[i].AnswerQ + '</b></div>');
+                                    $('#AnsQ' + j).html('<div class="alert alert-danger" role="alert"> <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span> Неправильный ответ </div>');
                                 }
                                 j++;
                             }
@@ -191,7 +191,7 @@
                             var proc = count / countQuestion * 100;
 
                             if (proc > 40) {
-                                $('#Href').html(' <a class="testhref" id="NextL" href="@Url.Action("ShowNextLesson", "Quizz", new { testName = testname })" >Следующий урок </a>');
+                                $('#Href').html(' <a class="testhref" id="NextL" href="@Url.Action("ShowNextLesson", "Quizz", new { testName = testname })" >Далее </a>');
 
                             }
                         }

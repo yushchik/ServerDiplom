@@ -1,6 +1,6 @@
-﻿@model User
+﻿@model Lesson
 @{
-    ViewData["Title"] = "Lesson";
+
 }
 
 
@@ -124,18 +124,48 @@
             margin-bottom: 10px;
             box-shadow: 0 0 5px;
         }
+
+        .testhref {
+            margin-top: 10px;
+            margin-bottom: 10px;
+            box-shadow: 0 0 5px;
+            font-size: 30px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+            margin-right: 20px;
+            text-align: end
+        }
+        .info {
+            margin-bottom: 20px;
+            margin-right: 20px;
+            font-size: 15px;
+            text-align:justify;
+        }
+        .titleLesson{
+            margin-top:30px;
+        }
     </style>
     <script src="https://cdn.ckeditor.com/ckeditor5/11.0.1/classic/ckeditor.js"></script>
 </head>
 <body>
-    <div class="titleLesson">
-        <h2 style="text-align:center; margin-top:20px; color:var(--main-color)"> @Model.NAME</h2>
-    </div>
-    <div class="text">
-        <h5 style="text-align:justify; margin-top:20px; text-transform:none; font-size: 20px"> Поздравляем с устпешным прохождением курса. Вы освоили основы финансовой грамотности вместе с нами. </h5>
+    <form method="post">
+        <h4>Question</h4>
+        <input class="form-control" type="text" name="Question">
+        @*<input type="hidden" name="id" value="@Model.ID_LESSON" />
+            <input type="hidden" name="sid" value="@Model.TITLE_LESSON" />*@
+        <textarea name="content" id="editor">
+@*@Model.INFORMATION*@
+    </textarea>
+    </form>
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#editor'))
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
+    <input asp-controller="Questions" asp-action="SaveAnswer" type="submit" value="Save" class="btn btn-lg btn-success btn-block">
 
-        <h5 style="text-align:justify; text-transform:none; font-size: 20px"> Благодарим за активность и упорство. Надеемся, тебе все понравилось и курс не был скучным.</h5>
-    </div>
-    <img src="https://images.wallpaperscraft.ru/image/fon_temnyy_pelena_87441_1280x720.jpg" />
 </body>
 </html>

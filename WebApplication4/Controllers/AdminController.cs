@@ -19,6 +19,7 @@ namespace WebApplication4.Controllers
         UserProgressService upS;
         TestService tS;
         ResultService rS;
+        QuestionService qS;
 
         //public UserAPIController(ApplicationDbContext context)
         //{
@@ -42,6 +43,7 @@ namespace WebApplication4.Controllers
             tS = new TestService(context);
             rS = new ResultService(context);
             upS = new UserProgressService(context);
+           
             _userManager = userManager;
         }
 
@@ -98,10 +100,45 @@ namespace WebApplication4.Controllers
         }
 
         [Authorize(Roles = "Admin")]
+        public IActionResult ChangeLesson(int id)
+        {
+                return View("ChangeLesson", lS.getLessonById(id));            
+         
+        }
+
+        [Authorize(Roles = "Admin")]
+        public IActionResult AllLesson()
+        {
+            lS.getAllLesson();
+            return View("AllLesson", lS.getAllLesson());
+        }
+
+        
+        [Authorize(Roles = "Admin")]
+        public IActionResult SaveChangeLesson(string information, int id, string title, string video)
+        {
+
+            lS.saveAnswer(information, id, title, video);
+
+            lS.getAllLesson();
+            return View("AllLesson", lS.getAllLesson());
+        }
+
+        [Authorize(Roles = "Admin")]
         public IActionResult CreateLesson()
         {
-          
             return View("CreateLesson");
         }
+
+        [Authorize(Roles = "Admin")]
+        public IActionResult SaveNewLesson(string information, int id, string title, string video)
+        {
+
+            lS.createLesson(information, id, title, video);
+
+            lS.getAllLesson();
+            return View("AllLesson", lS.getAllLesson());
+        }
+
     }
 }

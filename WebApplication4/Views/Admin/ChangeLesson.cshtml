@@ -150,16 +150,18 @@
 </head>
 <body>
     <form method="post">
-        <input asp-controller="Admin" asp-action="SaveNewLesson" type="submit" value="Сохранить изменения" class="btn btn-lg btn-success btn-block">
-       
         <br />
-        <input class="form-control" type="text" name="title"  >
+        <br />
+        <input asp-controller="Admin" asp-action="SaveChangeLesson" type="submit" value="Сохранить изменения" class="btn btn-lg btn-success btn-block">
+        <input type="hidden" name="id" value="@Model.ID_LESSON" />
+        <br />
+        <input class="form-control" type="text" name="title" value="@Model.TITLE_LESSON">
         <br />
         <textarea name="information" id="editor">
-       
+        @Model.INFORMATION
         </textarea>
         <br />
-        <input class="form-control" name="video" type="text" >
+        <input class="form-control" name="video" type="text" value="@Model.VIDEO">
     </form>
     <script>
         ClassicEditor

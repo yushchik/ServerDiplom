@@ -8,6 +8,7 @@
     @if (User.IsInRole("Admin"))
     {
         <a class="navbar-brand res" asp-area="" asp-controller="Admin" asp-action="Results">Results</a>
+        <a class="navbar-brand res" asp-area="" asp-controller="Admin" asp-action="AllLesson">AllLesson</a>
         <a class="navbar-brand res" asp-area="" asp-controller="Admin" asp-action="CreateLesson">CreateLesson</a>
 
         <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" method="post" id="logoutForm" class="navbar-right">

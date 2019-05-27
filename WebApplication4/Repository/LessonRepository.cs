@@ -33,5 +33,9 @@ namespace WebApplication4.Repository
         {
             db.Lesson.Add(Lesson);
         }
+        public void Update(Lesson Lesson)
+        {
+            db.Entry(Lesson).State = EntityState.Modified;
+        }
     }
 }

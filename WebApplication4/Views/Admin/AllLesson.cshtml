@@ -1,42 +1,33 @@
-﻿@model Lesson
+﻿@model IEnumerable<WebApplication4.Models.Lesson>
 @{
-
+   
 }
-
-
 <html>
 <head>
 
-    <meta charset="utf-8">
     <style>
 
         body {
             --main-font: 'Roboto', sans-serif;
             --header-font: 'Anton', sans-serif;
-            --text-font: Georgia, 'Times New Roman', Times, serif;
             --main-color: #FA9307;
             --light-color: #FA9307;
             --white: #fff;
             --black: #222;
-            --gray: #F7F6F6;
+            --gray: #888;
             --dark-white: #f5f5f5;
             --shadow: 0px 0px 6px 2px var(--dark-white);
             --space: 15px;
             --screw: 4px;
             --link-color: #FA9307;
-            background-color: var(--gray) !important;
+            background-color: var(--white) !important;
             color: var(--black) !important;
         }
 
-        h1, h2, h3, h4, h6, .logo {
+        h1, h2, h3, h4, h5, h6, .logo {
             font-family: var(--header-font);
             text-transform: uppercase;
             margin-top: 0;
-        }
-
-        p {
-            font-family: var(--text-font);
-            text-align: justify;
         }
 
         .logo {
@@ -113,61 +104,29 @@
         .body-content {
             min-height: calc(100vh - 110px);
         }
-
-        .video {
-            margin-left: 25%;
-        }
-
-        .lesson {
-            background-color: var(--white) !important;
-            margin-top: 10px;
-            margin-bottom: 10px;
-            box-shadow: 0 0 5px;
-        }
-
-        .testhref {
-            margin-top: 10px;
-            margin-bottom: 10px;
-            box-shadow: 0 0 5px;
-            font-size: 30px;
-        }
-        .form-group {
-            margin-bottom: 20px;
-            margin-right: 20px;
-            text-align: end
-        }
-        .info {
-            margin-bottom: 20px;
-            margin-right: 20px;
-            font-size: 15px;
-            text-align:justify;
-        }
-        .titleLesson{
-            margin-top:30px;
-        }
     </style>
-    <script src="https://cdn.ckeditor.com/ckeditor5/11.0.1/classic/ckeditor.js"></script>
 </head>
 <body>
-    <form method="post">
-        <input asp-controller="Admin" asp-action="SaveNewLesson" type="submit" value="Сохранить изменения" class="btn btn-lg btn-success btn-block">
-       
-        <br />
-        <input class="form-control" type="text" name="title"  >
-        <br />
-        <textarea name="information" id="editor">
-       
-        </textarea>
-        <br />
-        <input class="form-control" name="video" type="text" >
-    </form>
-    <script>
-        ClassicEditor
-            .create(document.querySelector('#editor'))
-            .catch(error => {
-                console.error(error);
-            });
-    </script>
-    
+    <br />
+    <div class="container">
+        <div class="row">
+            <table class="table">
+
+                @foreach (var item in Model)
+                {
+
+                <tr>
+
+                    <td>@item.TITLE_LESSON </td>
+                   
+                    <td>
+                       
+                        <a href="~/Admin/ChangeLesson/?id=@item.ID_LESSON">Изменить</a>
+                    </td>
+                    
+                </tr>
+                }
+            </table>
+        </div>
+    </div>
 </body>
-</html>

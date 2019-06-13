@@ -50,7 +50,8 @@ namespace WebApplication4.Models
         public int QuestionID { get; set; }
         public string QuestionText { get; set; }
         public string AnswerQ { get; set; }
-        public bool isCorrect { get; set; }
+        public int isCorrect { get; set; }
+       
 
 
     }

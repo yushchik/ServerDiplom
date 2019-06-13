@@ -124,28 +124,52 @@ namespace WebApplication4.Controllers
             
             foreach (QuizAnswersVM answser in resultQuiz)
             {
+                if(answser == null)
+                {
+                    QuizAnswersVM result = new QuizAnswersVM
+                    {
+                        QuestionID = 0,
+                        AnswerQ = null,
+                        isCorrect = 1
 
-                QuizAnswersVM result = dbContext.Answer.Where(a => a.ID_QUESTION == answser.QuestionID).Select(a => new QuizAnswersVM
-                {          
-                    QuestionID = a.ID_QUESTION,
-                    AnswerQ = a.ANSWER,
-                    isCorrect = (answser.AnswerQ.ToLower().Equals(a.ANSWER.ToLower()))
+                    };
+                    finalResultQuiz.Add(result);
+                }
+                else
+                {
+                    QuizAnswersVM result = dbContext.Answer.Where(a => a.ANSWER == answser.AnswerQ).Select(a => new QuizAnswersVM
+                    {
+                        QuestionID = a.ID_QUESTION,
+                        AnswerQ = a.ANSWER,
+                        isCorrect = a.ISTRUE_ANSWER
 
-                }).FirstOrDefault();
+                    }).FirstOrDefault();
+                    finalResultQuiz.Add(result);
+                }
+               
 
-                finalResultQuiz.Add(result);
+                
             }
             
-            for(int i = 0; i < finalResultQuiz.Count; i++) { 
-                if(finalResultQuiz.ElementAt(i).isCorrect == true)
+            for(int i = 0; i < finalResultQuiz.Count; i++) {
+                if (finalResultQuiz.ElementAt(i) == null)
+                {
+
+                }
+                else
+                {
+                    if (finalResultQuiz.ElementAt(i).isCorrect == 1)
                     {
-                       count++;
-                    QuesId = finalResultQuiz.ElementAt(i).QuestionID;
+
+                        QuesId = finalResultQuiz.ElementAt(i).QuestionID;
                     }
-                    else 
+                    else if (finalResultQuiz.ElementAt(i).isCorrect == 0)
                     {
-                    QuesId = finalResultQuiz.ElementAt(i).QuestionID;
-                } 
+                        count++;
+                        QuesId = finalResultQuiz.ElementAt(i).QuestionID;
+                    }
+                }
+                    
             }
             double correcCount = count;
            
@@ -157,14 +181,7 @@ namespace WebApplication4.Controllers
                     testID = u.ID_TEST;
                
             }
-            //Result Result = dbContext.Tests.Where(a => a.ID_TEST == TestId)
-            //    .Select(a => new Result
-            //    {
-            //        ID_USER = uS.getUserId(userName),
-            //        ID_TEST = a.ID_TEST,
-            //        RESULT = count3,
-            //        RESULT_DATE = DateTime.Now
-            //    }).FirstOrDefault();
+          
             IQueryable<QuestionVM> questions = dbContext.Question.Where(q => q.ID_TEST == testID)
                   .Select(q => new QuestionVM
                   {

@@ -101,6 +101,7 @@
 
                             @foreach (var choice in question.Choices)
                             {
+
                                 <label class="radio-inline">
                                     <input type="radio" name="@string.Format("{0}{1}", "inlineRadioOptions",count)" id="@string.Format("{0}{1}", "inlineRadio", countR)" value="@choice.ChoiceText" style="margin-left: -16px;"> @choice.ChoiceText
                                 </label><br />
@@ -117,21 +118,23 @@
                     </div> <!-- END BlockQ -->
                     count++;
                 }
-                <span id="countQuections" style="display:none;">@count</span>
-              
-                <div id="@string.Format("Href")" style="align-content:flex-end">
+                <div id="@string.Format("{0}{1}{2}", "Ans","Q2", count)">
+            </div>
+                    <span id="countQuections" style="display:none;">@count</span>
 
-                    <button type="button" id="SubmitQuiz" class="btn btn-default" style="margin-top: 10px;"><span class="glyphicon glyphicon-ok"></span>  Завершить тест </button>
+                    <div id="@string.Format("Href")" style="align-content:flex-end">
 
-                </div>
-             
-               
+                        <button type="button" id="SubmitQuiz" class="btn btn-default" style="margin-top: 10px;"><span class="glyphicon glyphicon-ok"></span>  Завершить тест </button>
 
-            }
+                    </div>
 
-        </div> <!-- END QUIZ -->
 
-    </div> <!-- END CONTAINER -->
+
+                    }
+
+                </div> <!-- END QUIZ -->
+
+            </div> <!-- END CONTAINER -->
 
     @section MyScritps
         {
@@ -149,17 +152,22 @@
                 var resultQuiz = [], countQuestion = parseInt(sel), question = {}, j = 1;
 
                 for (var i = 1; i < countQuestion; i++) {
-                    if ($('input[name=inlineRadioOptions' + i + ']:checked').val() == null) {
-                        $('#AnsQ' + i).html('<div class="alert alert-danger" role="alert"> <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span> Ответ не выбран </div>');
-                    } else {
+                    //if ($('input[name=inlineRadioOptions' + i + ']:checked').val() == null) {
+                   //     $('#AnsQ' + i).html('<div class="alert alert-danger" role="alert"> <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span> Ответ не выбран </div>');
+                  //  } else {
                     question = {
                         QuestionID: $('#ID_Q'+ i).text(),
                         QuestionText: $('#Q' + i).text(),
-                        AnswerQ: $('input[name=inlineRadioOptions' + i + ']:checked').val()
+                        AnswerQ: $('input[name=inlineRadioOptions' + i + ']:checked').val(),
+                       
                     }
 
-                        resultQuiz.push(question);
+                    resultQuiz.push(question);
+                    if (resultQuiz == null) {
+                        $('#AnsQ2' + j).html('<div class="alert alert-danger" role="alert"> <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span> Неправильный ответ </div>');
+
                     }
+                  //  }
                 }
 
                 $.ajax({
@@ -175,7 +183,11 @@
                             var count = 0;
                             for(var i = 0; i <response.result.length; i++ )
                             {
-                                if(response.result[i].isCorrect == true)
+                                if (response.result[i] == null) {
+                                    $('#AnsQ' + j).html('<div class="alert alert-danger" role="alert"> <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span> Неправильный ответ </div>');
+                                }
+                                else {
+                                if(response.result[i].isCorrect == 0)
                                 {
                                     count++;
 
@@ -184,6 +196,7 @@
                                 else
                                 {
                                     $('#AnsQ' + j).html('<div class="alert alert-danger" role="alert"> <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span> Неправильный ответ </div>');
+                                    }
                                 }
                                 j++;
                             }

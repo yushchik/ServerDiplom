@@ -36,7 +36,7 @@ namespace WebApplication4.Services
             unitOfWork.Save();
         }
 
-        public void createLesson(string information, int id, string title, string video)
+        public void createLesson(string information, string title, string video)
         {
             Lesson q = new Lesson();
             q.TITLE_LESSON = title;

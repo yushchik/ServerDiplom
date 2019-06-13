@@ -65,7 +65,7 @@ namespace WebApplication4.Controllers
         }
 
         [HttpPost]
-        public JsonResult QuizTest([FromBody]List<QuizAnswersVM> resultQuiz)
+        public JsonResult QuizTest([FromHeader]String name,[FromBody]List<QuizAnswersVM> resultQuiz)
         {
             List<QuizAnswersVM> finalResultQuiz = new List<QuizAnswersVM>();
 
@@ -76,7 +76,7 @@ namespace WebApplication4.Controllers
                 {
                     QuestionID = a.ID_QUESTION,
                     AnswerQ = a.ANSWER,
-                    isCorrect = (answser.AnswerQ.ToLower().Equals(a.ANSWER.ToLower()))
+                    isCorrect = a.ISTRUE_ANSWER
 
                 }).FirstOrDefault();
 
@@ -85,7 +85,7 @@ namespace WebApplication4.Controllers
 
             for (int i = 0; i < finalResultQuiz.Count; i++)
             {
-                if (finalResultQuiz.ElementAt(i).isCorrect == true)
+                if (finalResultQuiz.ElementAt(i).isCorrect == 1)
                 {
                     count++;
                     QuesId = finalResultQuiz.ElementAt(i).QuestionID;
@@ -97,8 +97,6 @@ namespace WebApplication4.Controllers
             }
             double correcCount = count;
 
-
-            String userName = User.Identity.Name;
             foreach (Question u in _context.Question)
             {
                 if (u.ID_QUESTION.Equals(QuesId))
@@ -114,7 +112,7 @@ namespace WebApplication4.Controllers
             double proc = correcCount / allCount * 100;
             Result Result = new Result
             {
-                ID_USER = uS.getUserId(userName),
+                ID_USER = uS.getUserId(name),
                 ID_TEST = testID,
                 RESULT = (float)proc,
                 RESULT_DATE2 = DateTime.Now
@@ -122,16 +120,16 @@ namespace WebApplication4.Controllers
             rS.CreateResult(Result);
             if (proc >= 50)
             {
-                UserProgress user = upS.getUserProgressByUserId(uS.getUserId(userName));
+                UserProgress user = upS.getUserProgressByUserId(uS.getUserId(name));
                 if (user == null)
                 {
-                    upS.ChangProgress(uS.getUserId(userName), ts.getLessonIdByTestId2(testID));
+                    upS.ChangProgress(uS.getUserId(name), ts.getLessonIdByTestId2(testID));
                 }
                 else
                 {
                     if (user.Id_Lesson_Learned < ts.getLessonIdByTestId2(testID))
                     {
-                        upS.ChangProgress(uS.getUserId(userName), ts.getLessonIdByTestId2(testID));
+                        upS.ChangProgress(uS.getUserId(name), ts.getLessonIdByTestId2(testID));
                     }
                 }
             }
@@ -140,7 +138,7 @@ namespace WebApplication4.Controllers
 
             }
 
-            return Json(finalResultQuiz);
+            return Json(proc);
 
 
         }

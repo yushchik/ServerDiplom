@@ -131,11 +131,9 @@ namespace WebApplication4.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        public IActionResult SaveNewLesson(string information, int id, string title, string video)
+        public IActionResult SaveNewLesson(string information, string title, string video)
         {
-
-            lS.createLesson(information, id, title, video);
-
+            lS.createLesson(information, title, video);
             lS.getAllLesson();
             return View("AllLesson", lS.getAllLesson());
         }

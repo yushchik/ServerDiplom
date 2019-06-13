@@ -151,15 +151,17 @@
 <body>
     <form method="post">
         <input asp-controller="Admin" asp-action="SaveNewLesson" type="submit" value="Сохранить изменения" class="btn btn-lg btn-success btn-block">
-       
+
         <br />
-        <input class="form-control" type="text" name="title"  >
+        <h5>Название урока</h5>
+        <input class="form-control" type="text" name="title">
         <br />
         <textarea name="information" id="editor">
        
         </textarea>
         <br />
-        <input class="form-control" name="video" type="text" >
+        <h5>Ссылка на видео</h5>
+        <input class="form-control" name="video" type="text">
     </form>
     <script>
         ClassicEditor

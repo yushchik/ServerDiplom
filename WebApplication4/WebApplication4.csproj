@@ -16,7 +16,7 @@
     <PackageReference Include="Microsoft.AspNetCore.DataProtection" Version="2.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.DataProtection.Abstractions" Version="2.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
-    <PackageReference Include="Microsoft.AspNetCore.Server.HttpSys" Version="2.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Server.HttpSys" Version="2.1.12" />
     <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel" Version="2.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.1.1" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.9" />
